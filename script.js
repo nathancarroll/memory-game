@@ -6,8 +6,6 @@ let colors = ['blue', 'green', 'red', 'yellow'];
 let j = 0;
 
 function onReady(){
-    // setInterval(flare('green'), 1000);
-    // setInterval(flare(), 2000, 'red');
     $('.button').on('click', handleClick);
     setTimeout(levelUp, 1000);
 }
@@ -19,8 +17,16 @@ function flare(color){
     }, 350);
 }
 
+function fastFlare(color){
+    $('.' + color).addClass('growed');
+    setTimeout(function(){
+        $('.' + color).removeClass('growed');
+    }, 80);  
+}
+
 function levelUp(){
     i = 0;
+    $('#score').text(colorSequence.length);
     let newColor = colors[Math.floor(Math.random() * 4)];
     colorSequence.push(newColor);
 
@@ -29,14 +35,16 @@ function levelUp(){
 }
 
 function handleClick(){
+    color = $(this).attr('id');
+    fastFlare(color);
+
     if (!$(this).hasClass('target')){
-        console.log('Game Over!');
-        console.log('Final Score: ', colorSequence.length - 1);
+        alert('Game Over!');
+        return
     } else {
         $(this).removeClass('target');
         i++;
         if (i === colorSequence.length){
-            // console.log('You win!');
             setTimeout(levelUp, 1000);
         }
         $('#' + colorSequence[i]).addClass('target');
