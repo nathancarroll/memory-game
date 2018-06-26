@@ -26,7 +26,6 @@ function fastFlare(color){
 
 function levelUp(){
     i = 0;
-    $('#score').text(colorSequence.length);
     let newColor = colors[Math.floor(Math.random() * 4)];
     colorSequence.push(newColor);
 
@@ -40,11 +39,14 @@ function handleClick(){
 
     if (!$(this).hasClass('target')){
         alert('Game Over!');
+        $('h1').empty();
+        $('h1').append('Final Score: ' + (colorSequence.length - 1));
         return
     } else {
         $(this).removeClass('target');
         i++;
         if (i === colorSequence.length){
+            $('#score').text(colorSequence.length);
             setTimeout(levelUp, 1000);
         }
         $('#' + colorSequence[i]).addClass('target');
